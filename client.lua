@@ -1,16 +1,26 @@
 Citizen.CreateThread(function()
 	while true do
-		SetDiscordAppId(1061083044968157214)
+		local player = GetPlayerPed(-1)
+		SetDiscordAppId() -- Application Id of discord (https://discord.com/developers/applications)
+		SetDiscordRichPresenceAsset('')     
+        SetDiscordRichPresenceAssetText('')    
+        SetDiscordRichPresenceAssetSmall('')
+        SetDiscordRichPresenceAssetSmallText('')
+		SetDiscordRichPresenceAction(0, "Se connecter", "") -- cfx link
+        SetDiscordRichPresenceAction(1, "Discord", "") -- Discord server link
+		
 
-		SetDiscordRichPresenceAsset('omixrp1')
-        
-        SetDiscordRichPresenceAssetText('Omix RP')
-       
-        SetDiscordRichPresenceAssetSmall('omixrp2')
-
-        SetDiscordRichPresenceAssetSmallText('Omix RP')
-
-        SetDiscordRichPresenceAction(0, "Discord", "https://discord.gg/nRZuBAkJsy")
+		while true do
+			Citizen.Wait(1500) -- time of refresh
+			players = {}
+			for i = 0, 128 do
+				if NetworkIsPlayerActive( i ) then
+					table.insert( players, i )
+				end
+			end
+			SetRichPresence(GetPlayerName(PlayerId()) .. " [" .. GetPlayerServerId(PlayerId()) .. "] | " .. #players + 0 .. " joueur" .. (#players == 1 and "" or "s") .. "")
+	
+		end
 
 		Citizen.Wait(60000)
 	end
